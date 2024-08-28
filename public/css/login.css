@@ -1,0 +1,83 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #eeedeb;
+}
+
+.form {
+    margin: 10px;
+}
+
+.wrapper {
+    background: #fff;
+    width: 350px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border-radius: 25px;
+}
+
+.wrapper .img {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.wrapper .logo {
+    height: 80px;
+}
+
+.wrapper h1 {
+    margin-bottom: 20px;
+}
+
+.input-box {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input-box input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+}
+
+.input-box i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+}
+
+.remember {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Tambahkan properti ini */
+    margin-bottom: 20px;
+    font-size: small;
+    width: 100%; /* Tambahkan ini jika ingin div penuh di container-nya */
+}
+
+button {
+    background: #007bff;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:hover {
+    background: #185491;
+}
