@@ -159,8 +159,35 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- Baris data akan dimasukkan di sini -->
+                                    @foreach($pegawai as $key => $p)
+                                    <tr>
+                                        <td>{{ $key + 1 }}</td>
+                                        <td>{{ $p->nama }}</td>
+                                        <td>{{ $p->nip }}</td>
+                                        <td>{{ $p->jabatan }}</td>
+                                        <td>{{ $p->unit_kerja }}</td>
+                                        <td>{{ $p->pangkat }}</td>
+                                        <td>{{ $p->email }}</td>
+                                        <td>{{ $p->hak_akses }}</td>
+                                        <td>{{ $p->status }}</td>
+                                        <td>
+                                            <!-- Tombol untuk edit dan delete -->
+                                            <a href="{{ route('pegawai.edit', $p->id) }}"
+                                                class="btn btn-primary btn-sm">Edit</a>
+                                            <form action="{{ route('pegawai.destroy', $p->id) }}" method="POST"
+                                                style="display: inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm"
+                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    @endforeach
                                 </tbody>
+                            </table>
+
+                            </tbody>
                             </table>
                         </div>
                     </div>

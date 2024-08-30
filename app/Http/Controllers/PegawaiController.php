@@ -8,36 +8,74 @@ use App\Models\Pegawai;
 class PegawaiController extends Controller
 {
     // Menampilkan form tambah pegawai
+    public function create()
+    {
+        return view('tbhDMpegawai'); // Ganti ini dengan nama file Blade untuk form tambah pegawai
+    }
+
     public function store(Request $request)
-{
-    // Debugging: Tampilkan semua data yang dikirim dari form
-    dd($request->all());
+    {
+        // Simpan data ke tabel pegawai
+        Pegawai::create([
+            'nama' => $request->nama,
+            'nip' => $request->nip,
+            'jabatan' => $request->jabatan,
+            'unit_kerja' => $request->unit_kerja,
+            'pangkat' => $request->pangkat,
+            'email' => $request->email,
+            'hak_akses' => $request->hak_akses,
+            'status' => $request->status,
+        ]);
 
-    // Validasi data input
-    $request->validate([
-        'nama' => 'required|string|max:100',
-        'nip' => 'required|string|max:25|unique:pegawai,nip',
-        'jabatan' => 'nullable|string|max:50',
-        'unit_kerja' => 'nullable|string|max:50',
-        'pangkat' => 'nullable|string|max:50',
-        'email' => 'required|email|max:100|unique:pegawai,email',
-        'hak_akses' => 'required|in:admin,pumk,pegawai,kasubag',
-        'status' => 'required|in:aktif,non-aktif',
-    ]);
+        // Redirect ke halaman daftar pegawai dengan pesan sukses
+        return redirect()->route('pegawai.index')->with('success', 'Pegawai berhasil ditambahkan');
+    }
 
-    // Simpan data ke tabel pegawai
-    Pegawai::create([
-        'nama' => $request->nama,
-        'nip' => $request->nip, 
-        'jabatan' => $request->jabatan,
-        'unit_kerja' => $request->unit_kerja,
-        'pangkat' => $request->pangkat,
-        'email' => $request->email,
-        'hak_akses' => $request->hak_akses,
-        'status' => $request->status,
-    ]);
+    public function index()
+    {
+        // Ambil semua data pegawai dari database
+        $pegawai = Pegawai::all();
 
-    // Redirect ke halaman daftar pegawai dengan pesan sukses
-    return redirect()->route('DMpegawai')->with('success', 'Pegawai berhasil ditambahkan');
-}
+        // Kirim data pegawai ke view 'DMpegawai'
+        return view('DMpegawai', compact('pegawai'));
+    }
+
+    // Fungsi untuk menampilkan form edit pegawai
+    public function edit($id)
+    {
+        $pegawai = Pegawai::findOrFail($id); // Ambil data pegawai berdasarkan id
+
+        // Kirim data pegawai ke view form edit pegawai
+        return view('tbhDMpegawai', compact('pegawai')); // Ganti dengan nama view yang Anda pakai
+    }
+
+    // Fungsi untuk mengupdate data pegawai
+    public function update(Request $request, $id)
+    {
+        $pegawai = Pegawai::findOrFail($id); // Cari pegawai berdasarkan id
+
+        // Update data pegawai
+        $pegawai->update([
+            'nama' => $request->nama,
+            'nip' => $request->nip,
+            'jabatan' => $request->jabatan,
+            'unit_kerja' => $request->unit_kerja,
+            'pangkat' => $request->pangkat,
+            'email' => $request->email,
+            'hak_akses' => $request->hak_akses,
+            'status' => $request->status,
+        ]);
+
+        // Redirect ke halaman daftar pegawai dengan pesan sukses
+        return redirect()->route('pegawai.index')->with('success', 'Pegawai berhasil diupdate');
+    }
+
+    public function destroy($id)
+    {
+        $pegawai = Pegawai::findOrFail($id); // Cari pegawai berdasarkan id
+        $pegawai->delete(); // Hapus pegawai dari database
+
+        // Redirect ke halaman daftar pegawai dengan pesan sukses
+        return redirect()->route('pegawai.index')->with('success', 'Pegawai berhasil dihapus');
+    }
 }
