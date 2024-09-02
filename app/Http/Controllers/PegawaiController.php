@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Pegawai;
+use App\Models\User;
 
 class PegawaiController extends Controller
 {
@@ -15,17 +16,29 @@ class PegawaiController extends Controller
 
     public function store(Request $request)
     {
-        // Simpan data ke tabel pegawai
-        Pegawai::create([
-            'nama' => $request->nama,
-            'nip' => $request->nip,
-            'jabatan' => $request->jabatan,
-            'unit_kerja' => $request->unit_kerja,
-            'pangkat' => $request->pangkat,
-            'email' => $request->email,
-            'hak_akses' => $request->hak_akses,
-            'status' => $request->status,
+        $validate = $request->validate([
+            'name' => 'required',
+            'nip' => 'required',
+            'jabatan' => 'required',
+            'unit_kerja' => 'required',
+            'pangkat' => 'required',
+            'email' => 'required|email:dns',
+            'hak_akses' => 'required',
+            'status' => 'required',
         ]);
+        $validateUser = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email:dns',
+            'hak_akses' => 'required',
+            'status' => 'required',
+        ]);
+       
+        // Simpan data ke tabel pegawai
+        $pegawai = Pegawai::create($validate);
+        $validateUser['id_pegawai'] = $pegawai->id;
+        $validateUser['password'] = bcrypt($validate['nip']);
+       
+        User::create($validateUser);
 
         // Redirect ke halaman daftar pegawai dengan pesan sukses
         return redirect()->route('pegawai.index')->with('success', 'Pegawai berhasil ditambahkan');
@@ -46,25 +59,33 @@ class PegawaiController extends Controller
         $pegawai = Pegawai::findOrFail($id); // Ambil data pegawai berdasarkan id
 
         // Kirim data pegawai ke view form edit pegawai
-        return view('tbhDMpegawai', compact('pegawai')); // Ganti dengan nama view yang Anda pakai
+        return view('tbhDMpegawai2', compact('pegawai')); 
     }
 
     // Fungsi untuk mengupdate data pegawai
     public function update(Request $request, $id)
     {
-        $pegawai = Pegawai::findOrFail($id); // Cari pegawai berdasarkan id
-
-        // Update data pegawai
-        $pegawai->update([
-            'nama' => $request->nama,
-            'nip' => $request->nip,
-            'jabatan' => $request->jabatan,
-            'unit_kerja' => $request->unit_kerja,
-            'pangkat' => $request->pangkat,
-            'email' => $request->email,
-            'hak_akses' => $request->hak_akses,
-            'status' => $request->status,
+        $validate = $request->validate([
+            'name' => 'required',
+            'nip' => 'required',
+            'jabatan' => 'required',
+            'unit_kerja' => 'required',
+            'pangkat' => 'required',
+            'email' => 'required|email:dns',
+            'hak_akses' => 'required',
+            'status' => 'required',
         ]);
+        $validateUser = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email:dns',
+            'hak_akses' => 'required',
+            'status' => 'required',
+        ]);
+        $pegawai = Pegawai::where('id',$id)->update($validate);
+       
+        $validateUser['password'] = bcrypt($validate['nip']);
+       
+        User::where('id_pegawai', $id)->update($validateUser);
 
         // Redirect ke halaman daftar pegawai dengan pesan sukses
         return redirect()->route('pegawai.index')->with('success', 'Pegawai berhasil diupdate');
@@ -72,10 +93,9 @@ class PegawaiController extends Controller
 
     public function destroy($id)
     {
-        $pegawai = Pegawai::findOrFail($id); // Cari pegawai berdasarkan id
-        $pegawai->delete(); // Hapus pegawai dari database
+        $pegawai = Pegawai::findOrFail($id); // mencari data pegawai
+        $pegawai->delete(); 
 
-        // Redirect ke halaman daftar pegawai dengan pesan sukses
         return redirect()->route('pegawai.index')->with('success', 'Pegawai berhasil dihapus');
     }
 }

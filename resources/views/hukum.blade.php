@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="css/style2.css" rel="stylesheet" />
+    <link href="/css/style2.css" rel="stylesheet" />
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -66,7 +66,17 @@
                                 <ul class="dropdown-menu dropdown-block" role="menu">
                                     <li><a href="#">Profil edition</a></li>
                                     <li><a href="#">Admin</a></li>
-                                    <li><a href="#">Logout</a></li>
+                                    <li>
+                                        <!-- Form Logout -->
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                            style="display: none;">
+                                            @csrf
+                                        </form>
+                                        <a href="#"
+                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            Logout
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
@@ -158,7 +168,28 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- Baris data akan dimasukkan di sini -->
+                                    @foreach($surat_hukum as $key => $p)
+                                    <tr>
+                                        <td>{{ $key + 1 }}</td>
+                                        <td>{{ $p->namesurat }}</td>
+                                        <td>{{ $p->Nomor}}</td>
+                                        <td>{{ $p->id_jenis_surat}}</td>
+                                        <td>{{ $p->tgl}}</td>
+                                        <td>{{ $p->id_tahun_surat}}</td>
+                                        <td>{{ $p->keterangan}}</td>
+                                        <td><a href="/storage/{{$p->nama_file}}">{{$p->nama_file}}</a></td>
+                                        <td><a href="/tbhsurathukum/edit/{{$p->id}}"
+                                                class="btn btn-primary btn-sm">Edit</a>
+                                            <form action="/tbhsurathukum/delete/{{$p->id}}" method="POST"
+                                                style="display: inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm"
+                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

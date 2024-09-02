@@ -145,7 +145,7 @@
                 </div>
 
                 <!-- Data FORM -->
-                <form action="/tbhsurathukum" method='POST' enctype="multipart/form-data">
+                <form action="/tbhsurathukum/update/{{$surat_hukum->id}}" method='POST' enctype="multipart/form-data">
                     @csrf
                     <div class="form1">
                         <section id="step-1" class="form-step mr-9 ml-9">
@@ -175,7 +175,7 @@
                                         <label class="col-sm-3 col-form-label">Jenis Surat</label>
                                         <div class="col-sm-9">
                                             <select name="id_jenis_surat" id="JenisSurat" class="form-control" required>
-                                                <option value="" selected="selected" hidden="hidden">Pilih Jenis Surat
+                                                <option value="" selected="selected" hidden="hidden">Pilih Jenis
                                                 </option>
                                                 @foreach($jenis_surat as $item)
                                                 <option value="{{$item->id}}">{{$item->JSurat}}</option>
@@ -201,9 +201,7 @@
                                                 </option>
                                                 @foreach($tahun_surat as $item)
                                                 <option value="{{$item->id}}">{{$item->tahun}}</option>
-
                                                 @endforeach
-
                                             </select>
                                         </div>
                                     </div>
@@ -228,7 +226,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <button type="submit" class="btn btn-primary btn-save"
                                     style="margin-top:30px">Submit</button>
                         </section>

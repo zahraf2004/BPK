@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="css/style2.css" rel="stylesheet" />
+    <link href="/css/style2.css" rel="stylesheet" />
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -66,7 +66,17 @@
                                 <ul class="dropdown-menu dropdown-block" role="menu">
                                     <li><a href="#">Profil edition</a></li>
                                     <li><a href="#">Admin</a></li>
-                                    <li><a href="#">Logout</a></li>
+                                    <li>
+                                        <!-- Form Logout -->
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                            style="display: none;">
+                                            @csrf
+                                        </form>
+                                        <a href="#"
+                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            Logout
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
@@ -171,7 +181,6 @@
                                         <td>{{ $p->hak_akses }}</td>
                                         <td>{{ $p->status }}</td>
                                         <td>
-                                            <!-- Tombol untuk edit dan delete -->
                                             <a href="{{ route('pegawai.edit', $p->id) }}"
                                                 class="btn btn-primary btn-sm">Edit</a>
                                             <form action="{{ route('pegawai.destroy', $p->id) }}" method="POST"
@@ -208,8 +217,6 @@
         </div>
 
     </div>
-
-    <!--Main Navigation-->
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
