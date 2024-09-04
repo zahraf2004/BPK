@@ -16,7 +16,7 @@ class InputSuratHukumController extends Controller
         return view('tbhsuratHukum', [
             'jenis_surat'=> JenisSurat::all(),
             'tahun_surat'=> TahunSurat::all()
-    ]); // Ganti ini dengan nama file Blade untuk form tambah pegawai
+    ]); // Ganti ini dengan nama file Blade untuk form tambah 
     }
     public function index(){
         return view('hukum', ['surat_hukum'=> InputSuratHukum::all()]);
@@ -40,15 +40,15 @@ class InputSuratHukumController extends Controller
         InputSuratHukum::create($validate);
        
 
-        // Redirect ke halaman daftar pegawai dengan pesan sukses
-        return redirect()->route('hukum.index')->with('success', 'Pegawai berhasil ditambahkan');
+        // Redirect ke halaman daftar dengan pesan sukses
+        return redirect()->route('hukum')->with('success', 'Surat berhasil ditambahkan');
     }
 
     public function edit($id)
     {
-        $surat_hukum = InputSuratHukum::find($id); // Ambil data pegawai berdasarkan id
+        $surat_hukum = InputSuratHukum::find($id); // Ambil data berdasarkan id
 
-        // Kirim data pegawai ke view form edit pegawai
+        // Kirim data ke view form edit 
         return view('tbhsuratHukumEdit', [
             'surat_hukum' => $surat_hukum,
             'jenis_surat'=> JenisSurat::all(),
@@ -56,7 +56,7 @@ class InputSuratHukumController extends Controller
     ]); 
     }
 
-    // Fungsi untuk mengupdate data pegawai
+    // Fungsi untuk mengupdate data 
     public function update(Request $request, $id)
     {
         $validate = $request->validate([
@@ -75,14 +75,14 @@ class InputSuratHukumController extends Controller
         InputSuratHukum::where('id', $id)->update($validate);
        
 
-        // Redirect ke halaman daftar pegawai dengan pesan sukses
-        return redirect()->route('pegawai.index')->with('success', 'Pegawai berhasil ditambahkan');
+        // Redirect ke halaman daftar dengan pesan sukses
+        return redirect()->route('hukum')->with('success', 'Surat berhasil ditambahkan');
     }
 
     public function destroy($id)
     {
         InputSuratHukum::where('id', $id)->delete();
 
-        return redirect()->route('pegawai.index')->with('success', 'Pegawai berhasil dihapus');
+        return redirect()->route('hukum')->with('success', 'Surat berhasil dihapus');
     }
 }

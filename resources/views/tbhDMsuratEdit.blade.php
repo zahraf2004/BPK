@@ -149,7 +149,7 @@
                     action="{{ isset($jenis_surat) ? route('jenis_surat.update', $jenis_surat->id) : route('JenisSurat.store') }}"
                     method="POST">
                     @csrf
-                    @if(isset($pegawai))
+                    @if(isset($jenis_surat))
                     @method('PUT')
                     @endif
 
@@ -164,7 +164,8 @@
                                         <label class="col-sm-3 col-form-label">Jenis Surat</label>
                                         <div class="col-sm-9">
                                             <input type="text" class="form-control" name="JSurat"
-                                                placeholder="Jenis Surat" required />
+                                                placeholder="Jenis Surat"
+                                                value="{{ old('JSurat', $jenis_surat->JSurat ?? '') }}" required />
                                         </div>
                                     </div>
                                 </div>
@@ -174,7 +175,9 @@
                                         <label class="col-sm-3 col-form-label">Keterangan</label>
                                         <div class="col-sm-9">
                                             <input type="text" class="form-control" name="keterangan"
-                                                placeholder="Masukkan Keterangan" required />
+                                                placeholder="Masukkan Keterangan"
+                                                value="{{ old('Keterangan', $jenis_surat->Keterangan ?? '') }}"
+                                                required />
                                         </div>
                                     </div>
 

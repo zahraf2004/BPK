@@ -3,23 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\InputSuratUmum;
+use App\Models\InputSuratKeu;
 use App\Models\JenisSurat;
 use App\Models\TahunSurat;
 
-
-class InputSuratUmumController extends Controller
+class InputSuratKeuController extends Controller
 {
-    //
     public function create()
     {
-        return view('tbhsuratUmum', [
+        return view('tbhSuratKeu', [
             'jenis_surat'=> JenisSurat::all(),
             'tahun_surat'=> TahunSurat::all()
     ]); 
     }
+
     public function index(){
-        return view('umum', ['surat_umum'=> InputSuratUmum::all()]);
+        return view('keuangan', ['surat_keuangan'=> InputSuratKeu::all()]);
     }
 
     public function store(Request $request)
@@ -37,17 +36,17 @@ class InputSuratUmumController extends Controller
        $dokumenName = time() . '-' . $request->nama_file->getClientOriginalName();
        $validate['nama_file'] = $dokumenName;
        $request->nama_file->storeAs('/public' , $dokumenName);
-        InputSuratUmum::create($validate);
+        InputSuratKeu::create($validate);
         
-        return redirect()->route('umum')->with('success', 'Surat berhasil ditambahkan');
+        return redirect()->route('keuangan')->with('success', 'Surat berhasil ditambahkan');
     }
 
     public function edit($id)
     {
-        $surat_umum = InputSuratUmum::find($id); // Ambil data berdasarkan id
+        $surat_keuangan = InputSuratKeu::find($id); // Ambil data berdasarkan id
         // Kirim data ke view form edit
-        return view('tbhsuratUmumEdit', [
-            'surat_umum' => $surat_umum,
+        return view('tbhSuratKeuEdit', [
+            'surat_keuangan' => $surat_keuangan,
             'jenis_surat'=> JenisSurat::all(),
             'tahun_surat'=> TahunSurat::all()
     ]); 
@@ -69,17 +68,17 @@ class InputSuratUmumController extends Controller
        $dokumenName = time() . '-' . $request->nama_file->getClientOriginalName();
        $validate['nama_file'] = $dokumenName;
        $request->nama_file->storeAs('/public' , $dokumenName);
-        InputSuratUmum::where('id', $id)->update($validate);
+        InputSuratKeu::where('id', $id)->update($validate);
        
 
         // Redirect ke halaman daftar  dengan pesan sukses
-        return redirect()->route('umum')->with('success', 'surat berhasil diedit');
+        return redirect()->route('keuangan')->with('success', 'surat berhasil diedit');
     }
 
     public function destroy($id)
     {
-        InputSuratUmum::where('id', $id)->delete();
+        InputSuratKeu::where('id', $id)->delete();
 
-        return redirect()->route('umum')->with('success', 'Surat berhasil dihapus');
+        return redirect()->route('keuangan')->with('success', 'Surat berhasil dihapus');
     }
 }

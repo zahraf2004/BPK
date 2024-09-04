@@ -146,6 +146,7 @@
 
                 <!-- Data FORM -->
                 <form action="/tbhsuratumum" method='POST' enctype="multipart/form-data">
+                    @csrf
                     <div class="form1">
                         <section id="step-1" class="form-step mr-9 ml-9">
                             <h4 class="card-title">{{ isset($surat_umum) ? 'Edit Surat Umum' : 'Input Surat Umum' }}

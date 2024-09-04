@@ -17,7 +17,7 @@ class JenisSuratController extends Controller
     {
         JenisSurat::create([
             'JSurat' => $request->JSurat,
-            'keterangan' => $request->Keterangan,
+            'keterangan' => $request->keterangan,
             
         ]);
 
@@ -35,18 +35,17 @@ class JenisSuratController extends Controller
         $jenis_surat = JenisSurat::findOrFail($id); // Ambil data surat berdasarkan id
 
         
-        return view('tbhDMsurat', compact('jenis_surat')); 
+        return view('tbhDMsuratEdit', compact('jenis_surat')); 
     }
 
     public function update(Request $request, $id)
     {
-        $jenis_surat = JenisSurat::findOrFail($id);
 
-        $jenis_surat->update([
-            'JSurat' => $request->nama,
-            'keterangan' => $request->Keterangan,
+        $validate = $request->validate([
+            'JSurat' => 'required',
+            'keterangan' => 'required',
         ]);
-
+        $jenis_surat = JenisSurat::where('id',$id)->update($validate);
         return redirect()->route('jenis_surat.index')->with('success', 'Jenis Surat berhasil diupdate');
     }
 

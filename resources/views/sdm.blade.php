@@ -168,7 +168,28 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- Baris data akan dimasukkan di sini -->
+                                    @foreach($surat_sdm as $key => $p)
+                                    <tr>
+                                        <td>{{ $key + 1 }}</td>
+                                        <td>{{ $p->namesurat }}</td>
+                                        <td>{{ $p->Nomor}}</td>
+                                        <td>{{ $p->id_jenis_surat}}</td>
+                                        <td>{{ $p->tgl}}</td>
+                                        <td>{{ $p->id_tahun_surat}}</td>
+                                        <td>{{ $p->keterangan}}</td>
+                                        <td><a href="/storage/{{$p->nama_file}}">{{$p->nama_file}}</a></td>
+                                        <td><a href="/tbhsuratSDM/edit/{{$p->id}}"
+                                                class="btn btn-primary btn-sm">Edit</a>
+                                            <form action="/tbhsuratSDM/delete/{{$p->id}}" method="POST"
+                                                style="display: inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm"
+                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

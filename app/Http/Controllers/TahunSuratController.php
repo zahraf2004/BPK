@@ -34,18 +34,17 @@ class TahunSuratController extends Controller
          $tahun_surat = TahunSurat::findOrFail($id); // Ambil data surat berdasarkan id
  
          
-         return view('tbhDMtahun', compact('tahun_surat')); 
+         return view('tbhDMtahunEdit', compact('tahun_surat')); 
      }
  
      public function update(Request $request, $id)
      {
-         $tahun_surat = TahunSurat::findOrFail($id);
- 
-         $tahun_surat->update([
-             'tahun' => $request->nama,
-             'Keterangan' => $request->Keterangan,
+         $validate=$request->validate([
+            'tahun' => 'required',
+            'Keterangan' => 'required',
          ]);
  
+         $tahun_surat = TahunSurat::where('id',$id)->update($validate);
          return redirect()->route('tahun_surat.index')->with('success', 'Jenis Surat berhasil diupdate');
      }
  

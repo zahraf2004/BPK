@@ -145,49 +145,90 @@
                 </div>
 
                 <!-- Data FORM -->
-                <form
-                    action="{{ isset($jenis_surat) ? route('jenis_surat.update', $jenis_surat->id) : route('JenisSurat.store') }}"
-                    method="POST">
+                <form action="/tbhsurathumas/update/{{$surat_humas->id}}" method='POST' enctype='multipart/form-data'>
                     @csrf
-                    @if(isset($pegawai))
-                    @method('PUT')
-                    @endif
-
                     <div class="form1">
                         <section id="step-1" class="form-step mr-9 ml-9">
-                            <h4 class="card-title">Input Jenis Surat</h4><br>
+                            <h4 class="card-title">Input Surat</h4><br>
                             <div class="row">
-
                                 <div class="col-md-6">
-                                    <br>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">Nama Surat</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" name="namesurat"
+                                                placeholder="nama surat"
+                                                value="{{old('namesurat', $surat_humas->namesurat ?? '')}}" required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">No Surat</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" name="Nomor"
+                                                placeholder="nomor surat"
+                                                value="{{old('Nomor', $surat_humas->Nomor ?? '')}}" required />
+                                        </div>
+                                    </div>
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">Jenis Surat</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="JSurat"
-                                                placeholder="Jenis Surat" required />
+                                            <select name="id_jenis_surat" id="JenisSurat" class="form-control" required>
+                                                <option value="" selected="selected" hidden="hidden">Pilih Jenis Surat
+                                                </option>
+                                                @foreach($jenis_surat as $item)
+                                                <option value="{{$item->id}}">{{$item->JSurat}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label" style="margin-top:5px">Tanggal</label>
+                                        <div class="col-sm-9">
+                                            <input type="date" class="form-control" name="tgl"
+                                                placeholder="Masukkan tanggal"
+                                                value="{{old('tgl', $surat_humas->tgl ?? '')}}" required />
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <br>
                                     <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Keterangan</label>
+                                        <label class="col-sm-3 col-form-label">Tahun Surat</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="keterangan"
-                                                placeholder="Masukkan Keterangan" required />
+                                            <select name="id_tahun_surat" id="id_tahun" class="form-control" required>
+                                                <option value="" selected="selected" hidden="hidden">Pilih Tahun
+                                                </option>
+                                                @foreach($tahun_surat as $item)
+                                                <option value="{{$item->id}}">{{$item->tahun}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
-
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label" style="margin-top:5px">Keterangan</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" name="keterangan"
+                                                placeholder="Masukkan Keterangan"
+                                                value="{{old('keterangan', $surat_humas->keterangan ?? '')}}"
+                                                required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label" style="margin-top:5px">Surat
+                                            Tugas</label>
+                                        <div class="col-sm-9">
+                                            <input type="file" class="form-control" name="nama_file"
+                                                placeholder="Surat Tugas" required />
+                                            <p class="mt-2" style="font-size: 10px;"><strong>*upload file pdf dengan
+                                                    ukuran
+                                                    max 1 mb</strong></p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <input type="hidden" class="form-control" name="status" id="status" value="draft"
-                                    readonly />
-                            </div>
-                            <br>
-                            <button type="submit" class="btn btn-primary btn-save">Submit</button>
+
+                                <button type="submit" class="btn btn-primary btn-save"
+                                    style="margin-top:30px">Submit</button>
+                        </section>
                     </div>
                 </form>
-
-                </section>
         </div>
 
     </div>
