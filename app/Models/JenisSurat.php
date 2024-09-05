@@ -11,4 +11,9 @@ class JenisSurat extends Model
     protected $table = 'jenis_surat';
 
     protected $guarded =['id'];
+
+    
+    public function InputSuratKeu(){
+        return $this->hasMany(InputSuratKeu::class);
+    }
 }

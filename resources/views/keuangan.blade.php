@@ -173,9 +173,9 @@
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $p->namesurat }}</td>
                                         <td>{{ $p->Nomor}}</td>
-                                        <td>{{ $p->id_jenis_surat}}</td>
+                                        <td>{{ $p->JenisSurat->JSurat }}</td>
                                         <td>{{ $p->tgl}}</td>
-                                        <td>{{ $p->id_tahun_surat}}</td>
+                                        <td>{{ $p->TahunSurat->tahun}}</td>
                                         <td>{{ $p->keterangan}}</td>
                                         <td><a href="/storage/{{$p->nama_file}}">{{$p->nama_file}}</a></td>
                                         <td><a href="/tbhsuratKeuangan/edit/{{$p->id}}"

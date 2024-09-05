@@ -11,11 +11,12 @@ class InputSuratSDM extends Model
     protected $table = 'surat_sdm';
     protected $guarded = ['id'];
 
-    public function JenisSurat() {
-        return $thisbelongsTo(JenisSurat::class);
+    public function JenisSurat(){
+        return $this->belongsTo(JenisSurat::class, 'id_jenis_surat', 'id');
     }
 
+
     public function TahunSurat(){
-        return $thisbelongsTo(TahunSurat::class);
+        return $this->belongsTo(TahunSurat::class, 'id_tahun_surat','id');
     }
 }

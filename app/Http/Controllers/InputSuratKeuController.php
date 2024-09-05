@@ -18,6 +18,9 @@ class InputSuratKeuController extends Controller
     }
 
     public function index(){
+        // $data =InputSuratKeu::with(['JenisSurat','TahunSurat'])->get();
+        // return $data;
+
         return view('keuangan', ['surat_keuangan'=> InputSuratKeu::all()]);
     }
 
