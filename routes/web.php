@@ -89,7 +89,7 @@ Route::get('/tbhsuratKeuangan/edit/{id}', [InputSuratKeuController::class, 'edit
 Route::post('/tbhsuratKeuangan/update/{id}', [InputSuratKeuController::class, 'update']);
 Route::delete('/tbhsuratKeuangan/delete/{id}', [InputSuratKeuController::class, 'destroy']);
 
-//Route surat keuangan
+//Route surat humas
 Route::get('/humas', [InputSuratHumasController::class, 'index'])->name('humas');
 Route::get('/tbhsurathumas', [InputSuratHumasController::class, 'create']);
 Route::post('/tbhsurathumas', [InputSuratHumasController::class, 'store']);

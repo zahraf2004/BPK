@@ -140,18 +140,20 @@
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">Selamat Datang</h1>
                     <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active">Dashboard</li>
+                        <li class="breadcrumb-item active">Dashboard > Data Master Pegawai</li>
                     </ol>
                 </div>
 
                 <!-- table -->
-                <div class="card2 shadow mb-4 mx-4">
+                <div class="table shadow mb-4 mx-4">
                     <div class="card-body">
-                        <a href="{{ url('/tbhDataMasterPegawai') }}" class="btn btn-primary mb-4">
-                            <span class="bx bx-plus"></span> Tambah Pegawai
-                        </a>
-                        <br>
-                        <br>
+                        <div class="row" style="margin: 5px">
+                            <div class="col-md-12 d-flex justify-content-start">
+                                <a href="{{ url('/tbhDataMasterPegawai') }}" class="btn btn-primary mb-4">
+                                    <span class="bx bx-plus"></span> Tambah Pegawai
+                                </a>
+                            </div>
+                        </div>
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
@@ -172,7 +174,7 @@
                                     @foreach($pegawai as $key => $p)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
-                                        <td>{{ $p->nama }}</td>
+                                        <td>{{ $p->name }}</td>
                                         <td>{{ $p->nip }}</td>
                                         <td>{{ $p->jabatan }}</td>
                                         <td>{{ $p->unit_kerja }}</td>

@@ -32,10 +32,10 @@
                         </button>
                         <img src="{{ asset('img/Logo-BPK.png') }}" alt="logo" height="45px">
                         <a class="navbar-brand" href="{{ url('/dashboard') }}"
-                            style="color: #ffffff; margin-left: 10px;">SiMail</a>
+                            style="color: #ffffff; margin-left: 30px; font-size:25px;">SiMail</a>
                     </div>
                     <div id="navbar-collapse" class="collapse navbar-collapse">
-                        <form class="navbar-form navbar-left" role="search" style="margin-left: 40px">
+                        <form class="navbar-form navbar-left" role="search" style="margin-left: 20px">
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="Search">
                                 <span class="input-group-btn">
@@ -140,17 +140,54 @@
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">Selamat Datang</h1>
                     <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active">Dashboard</li>
+                        <li class="breadcrumb-item active">Dashboard > Umum & TI</li>
                     </ol>
                 </div>
 
                 <!-- table -->
-                <div class="card2 shadow mb-4 mx-4">
+                <div class="table shadow mb-4 mx-4">
                     <div class="card-body">
-                        <a href="{{ url('/tbhsuratumum') }}" class="btn btn-primary mb-4">
-                            <span class="bx bx-plus"></span> Tambah Surat
-                        </a>
-                        <br>
+                        <!-- Filter ya broo -->
+                        <form class="filter" action="" method="GET">
+                            <div class="row d-flex align-items-center">
+                                <div class="col-md-5 mb-3">
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label">Jenis Surat</label>
+                                        <div class="col-sm-8">
+                                            <select name="id_jenis_surat" id="JenisSurat"
+                                                class="form-control form-control-sm" required>
+                                                <option value="" selected="selected" hidden="hidden">Pilih Jenis Surat
+                                                </option>
+                                                <!-- Isi option dari controller yaaa brooo jgn lupa-->
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5 mb-3">
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label">Tahun Surat</label>
+                                        <div class="col-sm-8">
+                                            <select name="id_tahun_surat" id="id_tahun"
+                                                class="form-control form-control-sm" required>
+                                                <option value="" selected="selected" hidden="hidden">Pilih Tahun
+                                                </option>
+                                                <!-- Isi option dari controller yaaa brooo jgn lupa-->
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 mb-3 d-flex justify-content-start">
+                                    <button type="submit" class="btn btn-primary btn-sm">Terapkan Filter</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="row" style="margin-left: 5px">
+                            <div class="col-md-12 d-flex justify-content-start">
+                                <a href="{{ url('/tbhsuratumum') }}" class="btn btn-primary mb-4">
+                                    <span class="bx bx-plus"></span> Tambah Surat
+                                </a>
+                            </div>
+                        </div>
                         <br>
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -172,16 +209,17 @@
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $p->namesurat }}</td>
-                                        <td>{{ $p->Nomor}}</td>
-                                        <td>{{ $p->JenisSurat->JSurat}}</td>
-                                        <td>{{ $p->tgl}}</td>
-                                        <td>{{ $p->TahunSurat->tahun}}</td>
-                                        <td>{{ $p->keterangan}}</td>
-                                        <td><a href="/storage/{{$p->nama_file}}">{{$p->nama_file}}</a></td>
-                                        <td><a href="/tbhsuratumum/edit/{{$p->id}}"
+                                        <td>{{ $p->Nomor }}</td>
+                                        <td>{{ $p->JenisSurat->JSurat }}</td>
+                                        <td>{{ $p->tgl }}</td>
+                                        <td>{{ $p->TahunSurat->tahun }}</td>
+                                        <td>{{ $p->keterangan }}</td>
+                                        <td><a href="/storage/{{$p->nama_file}}">{{ $p->nama_file }}</a></td>
+                                        <td>
+                                            <a href="/tbhsuratumum/edit/{{$p->id}}"
                                                 class="btn btn-primary btn-sm">Edit</a>
                                             <form action="/tbhsuratumum/delete/{{$p->id}}" method="POST"
-                                                style="display: inline;">
+                                                style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger btn-sm"

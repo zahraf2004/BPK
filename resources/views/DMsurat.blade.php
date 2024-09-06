@@ -140,18 +140,20 @@
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">Selamat Datang</h1>
                     <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active">Dashboard</li>
+                        <li class="breadcrumb-item active">Dashboard > Data Master Jenis Surat</li>
                     </ol>
                 </div>
 
                 <!-- table -->
-                <div class="card2 shadow mb-4 mx-4">
+                <div class="table shadow mb-4 mx-4">
                     <div class="card-body">
-                        <a href="{{ url('/tbhDataMasterSurat') }}" class="btn btn-primary mb-4">
-                            <span class="bx bx-plus"></span> Tambah Jenis Surat
-                        </a>
-                        <br>
-                        <br>
+                        <div class="row" style="margin: 5px">
+                            <div class="col-md-12 d-flex justify-content-start">
+                                <a href="{{ url('/tbhDataMasterSurat') }}" class="btn btn-primary mb-4">
+                                    <span class="bx bx-plus"></span> Tambah Jenis Surat
+                                </a>
+                            </div>
+                        </div>
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
