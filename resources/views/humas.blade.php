@@ -14,10 +14,7 @@
 
 </head>
 
-<!------ Include the above in your HEAD tag ---------->
-
 <body>
-    <!--Main Navigation-->
     <div id="navbar-wrapper">
         <header>
             <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="background-color: #92bce0;">
@@ -96,13 +93,11 @@
                         </a>
                     </li>
                     <li>
-                        <!-- Menggunakan data-target untuk menghubungkan dengan ID panel -->
                         <a class="accordion-toggle collapsed toggle-switch" data-toggle="collapse" href="#submenu-2">
                             <span class="sidebar-icon"><i class="fa fa-users"></i></span>
                             <span class="sidebar-title">Data Master</span>
                             <b class="caret"></b>
                         </a>
-                        <!-- Menambahkan ID yang sesuai dengan data-target -->
                         <ul id="submenu-2" class="panel-collapse collapse panel-switch" role="menu">
                             <li><a href="{{ url('/DataMasterPegawai')}}"><i class="fa fa-caret-right"></i>Data
                                     Pegawai</a>
@@ -114,13 +109,11 @@
                         </ul>
                     </li>
                     <li style="background-color: #428bca; color: #ffffff;">
-                        <!-- Menggunakan data-target untuk menghubungkan dengan ID panel -->
                         <a class="accordion-toggle collapsed toggle-switch" data-toggle="collapse" href="#submenu-3">
                             <span class="sidebar-icon"><i class="fa fa-newspaper-o"></i></span>
                             <span class="sidebar-title">Kategori</span>
                             <b class="caret"></b>
                         </a>
-                        <!-- Pastikan ID sesuai dengan data-target -->
                         <ul id="submenu-3" class="panel-collapse collapse panel-switch" role="menu">
                             <li><a href="{{ url('/hukum')}}"><i class="fa fa-caret-right"></i>Subbagian Hukum</a></li>
                             <li><a href="{{ url('/umum')}}"><i class="fa fa-caret-right"></i>Subbagian Umum & TI</a>
@@ -158,7 +151,9 @@
                                                 class="form-control form-control-sm" required>
                                                 <option value="" selected="selected" hidden="hidden">Pilih Jenis Surat
                                                 </option>
-                                                <!-- Isi option dari controller yaaa brooo jgn lupa-->
+                                                @foreach($jenis_surat as $item)
+                                                <option value="{{ $item->id }}">{{ $item->JSurat }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -171,7 +166,10 @@
                                                 class="form-control form-control-sm" required>
                                                 <option value="" selected="selected" hidden="hidden">Pilih Tahun
                                                 </option>
-                                                <!-- Isi option dari controller yaaa brooo jgn lupa-->
+                                                @foreach($tahun_surat as $item) <option value="{{$item->id}}">
+                                                    {{$item->tahun}}
+                                                </option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -214,7 +212,8 @@
                                         <td>{{ $p->tgl }}</td>
                                         <td>{{ $p->TahunSurat->tahun }}</td>
                                         <td>{{ $p->keterangan }}</td>
-                                        <td><a href="/storage/{{$p->nama_file}}">{{ $p->nama_file }}</a></td>
+                                        <td><a href="/storage/{{$p->nama_file}}">{{ $p->nama_file }}</a>
+                                        </td>
                                         <td>
                                             <a href="/tbhsurathumas/edit/{{$p->id}}"
                                                 class="btn btn-primary btn-sm">Edit</a>

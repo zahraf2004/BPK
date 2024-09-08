@@ -18,9 +18,39 @@ class InputSuratHukumController extends Controller
             'tahun_surat'=> TahunSurat::all()
     ]); // Ganti ini dengan nama file Blade untuk form tambah 
     }
-    public function index(){
-        return view('hukum', ['surat_hukum'=> InputSuratHukum::all()]);
+    public function index(Request $request)
+{
+    // Ambil data jenis surat dan tahun surat untuk opsi filter
+    $jenis_surat = JenisSurat::all();
+    $tahun_surat = TahunSurat::all();
+
+    // Ambil parameter filter dari request (GET)
+    $id_jenis_surat = $request->get('id_jenis_surat');
+    $id_tahun_surat = $request->get('id_tahun_surat');
+
+    // Mulai query surat hukum
+    $query = InputSuratHukum::query();
+
+    // Tambahkan kondisi filter jika ada
+    if ($id_jenis_surat) {
+        $query->where('id_jenis_surat', $id_jenis_surat);
     }
+
+    if ($id_tahun_surat) {
+        $query->where('id_tahun_surat', $id_tahun_surat);
+    }
+
+    // Eksekusi query
+    $surat_hukum = $query->get();
+
+    // Kirim data surat, jenis surat, dan tahun surat ke view
+    return view('hukum', [
+        'surat_hukum' => $surat_hukum,
+        'jenis_surat' => $jenis_surat,
+        'tahun_surat' => $tahun_surat
+    ]);
+}
+
 
     public function store(Request $request)
     {

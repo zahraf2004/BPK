@@ -16,8 +16,29 @@ class InputSuratHumasController extends Controller
             'tahun_surat'=> TahunSurat::all()
     ]); 
     }
-    public function index(){
-        return view('humas', ['surat_humas'=> InputSuratHumas::all()]);
+    public function index(Request $request){
+        $jenis_surat = JenisSurat::all();
+        $tahun_surat = TahunSurat::all();
+
+        $id_jenis_surat = $request->get('id_jenis_surat');
+        $id_tahun_surat = $request->get('id_tahun_surat');
+        
+        $query = InputSuratHumas::query();
+
+        if($id_jenis_surat){
+            $query->where('id_jenis_surat', $id_jenis_surat);
+        }
+
+        if ($id_tahun_surat) {
+            $query->where('id_tahun_surat', $id_tahun_surat);
+        }
+        $surat_humas = $query->get() ;
+        
+        return view('humas', [
+            'surat_humas'=> $surat_humas,
+            'jenis_surat' => $jenis_surat,
+            'tahun_surat' => $tahun_surat,
+        ]);
     }
 
     public function store(Request $request)

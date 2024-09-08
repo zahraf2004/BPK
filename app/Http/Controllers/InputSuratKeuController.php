@@ -17,11 +17,30 @@ class InputSuratKeuController extends Controller
     ]); 
     }
 
-    public function index(){
-        // $data =InputSuratKeu::with(['JenisSurat','TahunSurat'])->get();
-        // return $data;
+    public function index(Request $request){
+        $jenis_surat = JenisSurat::all();
+        $tahun_surat = TahunSurat::all();
+        
+        $id_jenis_surat = $request->get('id_jenis_surat');
+        $id_tahun_surat = $request->get('id_tahun_surat');
+        
+        $query = InputSuratKeu::query();
 
-        return view('keuangan', ['surat_keuangan'=> InputSuratKeu::all()]);
+        if ($id_jenis_surat) {
+            $query->where('id_jenis_surat', $id_jenis_surat);
+        }
+    
+        if ($id_tahun_surat) {
+            $query->where('id_tahun_surat', $id_tahun_surat);
+        }
+        
+        $surat_keuangan = $query->get();
+
+        return view('keuangan', [
+            'surat_keuangan'=> $surat_keuangan,
+            'jenis_surat' => $jenis_surat, 
+            'tahun_surat'=> $tahun_surat, 
+        ]); 
     }
 
     public function store(Request $request)
