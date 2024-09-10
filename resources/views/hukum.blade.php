@@ -224,8 +224,8 @@
                                         <td>{{ $p->JenisSurat->JSurat }}</td>
                                         <td>{{ $p->tgl }}</td>
                                         <td>{{ $p->TahunSurat->tahun }}</td>
-                                        <td>{{ $p->keterangan }}</td>
                                         <td><a href="/storage/{{$p->nama_file}}">{{ $p->nama_file }}</a></td>
+                                        <td>{{ $p->keterangan }}</td>
                                         <td>
                                             <a href="/tbhsurathukum/edit/{{$p->id}}"
                                                 class="btn btn-primary btn-sm">Edit</a>

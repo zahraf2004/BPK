@@ -21,7 +21,7 @@ class CreatePegawaisTable extends Migration
             $table->string('pangkat', 50)->nullable();
             $table->string('unit_kerja', 50)->nullable();
             $table->string('email', 100)->unique(); // Email sebagai username
-            $table->enum('hak_akses', ['admin', 'pumk', 'subgian']);
+            $table->enum('hak_akses', ['admin', 'Pegawai',]);
             $table->enum('status', ['aktif', 'tidak aktif'])->default('aktif');
             $table->timestamps();
         });

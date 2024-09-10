@@ -19,8 +19,8 @@ class InputSuratSDMController extends Controller
     }
 
     public function index(Request $request){
-        $jenis_surat = JenisSurat::all();
-        $tahun_surat = TahunSurat::all();
+        $jenis_surat = JenisSurat::orderBy('created_at', 'desc')->get();
+        $tahun_surat = TahunSurat::orderBy('created_at', 'desc')->get();
 
         $id_jenis_surat = $request->get('id_jenis_surat');
         $id_tahun_surat = $request->get('id_tahun_surat');

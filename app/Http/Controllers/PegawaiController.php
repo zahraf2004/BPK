@@ -9,13 +9,21 @@ use App\Models\User;
 class PegawaiController extends Controller
 {
     // Menampilkan form tambah pegawai
-    public function create()
+    public function create(Request $request)
     {
+        
+        if ($request->user()->cannot('view', User::class)) {
+            abort(403);
+        }
         return view('tbhDMpegawai'); // Ganti ini dengan nama file Blade untuk form tambah pegawai
     }
 
     public function store(Request $request)
-    {
+    { 
+        
+        if ($request->user()->cannot('view', User::class)) {
+            abort(403);
+        }
         $validate = $request->validate([
             'name' => 'required',
             'nip' => 'required',
@@ -44,8 +52,12 @@ class PegawaiController extends Controller
         return redirect()->route('pegawai.index')->with('success', 'Pegawai berhasil ditambahkan');
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        
+        if ($request->user()->cannot('view', User::class)) {
+            abort(403);
+        }
         // Ambil semua data pegawai dari database
         $pegawai = Pegawai::all();
 
@@ -54,8 +66,12 @@ class PegawaiController extends Controller
     }
 
     // Fungsi untuk menampilkan form edit pegawai
-    public function edit($id)
+    public function edit($id, Request $request)
     {
+        
+        if ($request->user()->cannot('view', User::class)) {
+            abort(403);
+        }
         $pegawai = Pegawai::findOrFail($id); // Ambil data pegawai berdasarkan id
 
         // Kirim data pegawai ke view form edit pegawai
@@ -65,6 +81,10 @@ class PegawaiController extends Controller
     // Fungsi untuk mengupdate data pegawai
     public function update(Request $request, $id)
     {
+        
+        if ($request->user()->cannot('view', User::class)) {
+            abort(403);
+        }
         $validate = $request->validate([
             'name' => 'required',
             'nip' => 'required',
@@ -91,10 +111,16 @@ class PegawaiController extends Controller
         return redirect()->route('pegawai.index')->with('success', 'Pegawai berhasil diupdate');
     }
 
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
+        
+        if ($request->user()->cannot('view', User::class)) {
+            abort(403);
+        }
         $pegawai = Pegawai::findOrFail($id); // mencari data pegawai
         $pegawai->delete(); 
+        User::where('id_pegawai', $id)->delete();
+
 
         return redirect()->route('pegawai.index')->with('success', 'Pegawai berhasil dihapus');
     }

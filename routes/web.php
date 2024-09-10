@@ -10,20 +10,23 @@ use App\Http\Controllers\InputSuratUmumController;
 use App\Http\Controllers\InputSuratSDMController;
 use App\Http\Controllers\InputSuratKeuController;
 use App\Http\Controllers\InputSuratHumasController;
+use App\Http\Controllers\DashboardController;
 
-
-// Route tampil login ya broo 
+// Route tampil login
 Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
 
-// Route ini biar bisa login kak
+// Route untuk login
 Route::post('/', [AuthController::class, 'login']);
 
-
+Route::middleware('auth')->group(function(){
+// Route untuk logout
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/dashboard', function () {
-    return view('dashboard'); 
-})->middleware(['auth'])->name('dashboard');
+
+// Route dashboard hanya bisa diakses jika sudah login
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+
 
 // Route Pegawai
 Route::get('/tbhDataMasterPegawai', [PegawaiController::class, 'create'])->name('pegawai.create');
@@ -96,3 +99,4 @@ Route::post('/tbhsurathumas', [InputSuratHumasController::class, 'store']);
 Route::get('/tbhsurathumas/edit/{id}', [InputSuratHumasController::class, 'edit']);
 Route::post('/tbhsurathumas/update/{id}', [InputSuratHumasController::class, 'update']);
 Route::delete('/tbhsurathumas/delete/{id}', [InputSuratHumasController::class, 'destroy']);
+});

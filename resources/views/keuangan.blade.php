@@ -218,8 +218,8 @@
                                         <td>{{ $p->JenisSurat->JSurat }}</td>
                                         <td>{{ $p->tgl }}</td>
                                         <td>{{ $p->TahunSurat->tahun }}</td>
-                                        <td>{{ $p->keterangan }}</td>
                                         <td><a href="/storage/{{$p->nama_file}}">{{ $p->nama_file }}</a>
+                                        <td>{{ $p->keterangan }}</td>
                                         </td>
                                         <td>
                                             <a href="/tbhsuratKeuangan/edit/{{$p->id}}"

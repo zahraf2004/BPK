@@ -21,8 +21,8 @@ class InputSuratHukumController extends Controller
     public function index(Request $request)
 {
     // Ambil data jenis surat dan tahun surat untuk opsi filter
-    $jenis_surat = JenisSurat::all();
-    $tahun_surat = TahunSurat::all();
+    $jenis_surat = JenisSurat::orderBy('created_at', 'desc')->get();
+    $tahun_surat = TahunSurat::orderBy('created_at', 'desc')->get();
 
     // Ambil parameter filter dari request (GET)
     $id_jenis_surat = $request->get('id_jenis_surat');
@@ -41,7 +41,7 @@ class InputSuratHukumController extends Controller
     }
 
     // Eksekusi query
-    $surat_hukum = $query->get();
+    $surat_hukum = $query->orderBy('created_at', 'desc')->get();
 
     // Kirim data surat, jenis surat, dan tahun surat ke view
     return view('hukum', [
