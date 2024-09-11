@@ -78,12 +78,13 @@
                                 <td>{{ $p->namesurat }}</td>
                                 <td>{{ $p->Nomor }}</td>
                                 <td>{{ $p->JenisSurat->JSurat }}</td>
-                                <td>{{ $p->tgl }}</td>
+                                <td>{{ \Carbon\Carbon::parse($p->tgl)->format('d-m-Y') }}</td>
                                 <td>{{ $p->TahunSurat->tahun }}</td>
                                 <td><a href="/storage/{{$p->nama_file}}">{{ $p->nama_file }}</a>
                                 <td>{{ $p->keterangan }}</td>
                                 </td>
                                 <td>
+                                    @if(auth()->user()->hak_akses === 'Admin')
                                     <a href="/tbhsuratumum/edit/{{$p->id}}" class="btn btn-primary btn-sm">Edit</a>
                                     <form action="/tbhsuratumum/delete/{{$p->id}}" method="POST"
                                         style="display:inline;">
@@ -92,6 +93,9 @@
                                         <button type="submit" class="btn btn-danger btn-sm"
                                             onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Delete</button>
                                     </form>
+                                    @else
+                                    <span>Tidak ada aksi</span>
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach

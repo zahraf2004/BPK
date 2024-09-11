@@ -19,37 +19,38 @@ class InputSuratHukumController extends Controller
     ]); // Ganti ini dengan nama file Blade untuk form tambah 
     }
     public function index(Request $request)
-{
-    // Ambil data jenis surat dan tahun surat untuk opsi filter
-    $jenis_surat = JenisSurat::orderBy('created_at', 'desc')->get();
-    $tahun_surat = TahunSurat::orderBy('created_at', 'desc')->get();
+    {
+        // Ambil data jenis surat dan tahun surat untuk opsi filter
+        $jenis_surat = JenisSurat::all();
+        $tahun_surat = TahunSurat::all();
 
-    // Ambil parameter filter dari request (GET)
-    $id_jenis_surat = $request->get('id_jenis_surat');
-    $id_tahun_surat = $request->get('id_tahun_surat');
+        // Ambil parameter filter dari request (GET)
+        $id_jenis_surat = $request->get('id_jenis_surat');
+        $id_tahun_surat = $request->get('id_tahun_surat');
 
-    // Mulai query surat hukum
-    $query = InputSuratHukum::query();
+        // Mulai query surat hukum
+        $query = InputSuratHukum::query();
 
-    // Tambahkan kondisi filter jika ada
-    if ($id_jenis_surat) {
-        $query->where('id_jenis_surat', $id_jenis_surat);
-    }
+        // Tambahkan kondisi filter jika ada
+        if ($id_jenis_surat) {
+            $query->where('id_jenis_surat', $id_jenis_surat);
+        }
 
-    if ($id_tahun_surat) {
-        $query->where('id_tahun_surat', $id_tahun_surat);
-    }
+        if ($id_tahun_surat) {
+            $query->where('id_tahun_surat', $id_tahun_surat);
+        }
 
-    // Eksekusi query
-    $surat_hukum = $query->orderBy('created_at', 'desc')->get();
-
-    // Kirim data surat, jenis surat, dan tahun surat ke view
-    return view('hukum', [
-        'surat_hukum' => $surat_hukum,
-        'jenis_surat' => $jenis_surat,
-        'tahun_surat' => $tahun_surat
-    ]);
-}
+        // Eksekusi query
+        $surat_hukum = $query->orderBy('created_at', 'desc')->get();
+        // Urutkan berdasarkan kolom tgl secara ascending
+        $surat_hukum = $query->orderBy('tgl', 'asc')->get(); 
+        // Kirim data surat, jenis surat, dan tahun surat ke view
+        return view('hukum', [
+            'surat_hukum' => $surat_hukum,
+            'jenis_surat' => $jenis_surat,
+            'tahun_surat' => $tahun_surat
+        ]);
+    }   
 
 
     public function store(Request $request)
@@ -76,6 +77,9 @@ class InputSuratHukumController extends Controller
 
     public function edit($id)
     {
+        if (auth()->user()->hak_akses !== 'admin') {
+            return redirect()->back()->with('error', 'Anda tidak memiliki akses untuk mengedit surat ini.');
+        }
         $surat_hukum = InputSuratHukum::find($id); // Ambil data berdasarkan id
 
         // Kirim data ke view form edit 
@@ -89,6 +93,9 @@ class InputSuratHukumController extends Controller
     // Fungsi untuk mengupdate data 
     public function update(Request $request, $id)
     {
+        if (auth()->user()->hak_akses !== 'admin') {
+        return redirect()->back()->with('error', 'Anda tidak memiliki akses untuk menghapus surat ini.');
+    }
         $validate = $request->validate([
             'namesurat' => 'required',
             'Nomor' => 'required',

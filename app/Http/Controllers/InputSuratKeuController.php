@@ -18,8 +18,8 @@ class InputSuratKeuController extends Controller
     }
 
     public function index(Request $request){
-        $jenis_surat = JenisSurat::orderBy('created_at', 'desc')->get();
-        $tahun_surat = TahunSurat::orderBy('created_at', 'desc')->get();
+        $jenis_surat = JenisSurat::all();
+        $tahun_surat = TahunSurat::all();
         
         $id_jenis_surat = $request->get('id_jenis_surat');
         $id_tahun_surat = $request->get('id_tahun_surat');
@@ -35,7 +35,8 @@ class InputSuratKeuController extends Controller
         }
         
         $surat_keuangan = $query->get();
-
+        $surat_hukum = $query->orderBy('tgl', 'asc')->get();
+        
         return view('keuangan', [
             'surat_keuangan'=> $surat_keuangan,
             'jenis_surat' => $jenis_surat, 

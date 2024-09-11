@@ -11,7 +11,19 @@
 
         <!-- table -->
         <div class="table shadow mb-4 mx-4">
-            <div class="card-body">
+            @if(session('error'))
+            <div class="alert alert-danger">
+                {{session('error')}}
+            </div>
+            @endif
+
+            @if(session('success'))
+            <div class="alert alert-success">
+                {{session('success')}}
+            </div>
+            @endif
+
+            <div class=" card-body">
                 <div class="row" style="margin: 5px">
                     <div class="col-md-12 d-flex justify-content-start">
                         <a href="{{ url('/tbhDataMasterTahun') }}" class="btn btn-primary mb-4">

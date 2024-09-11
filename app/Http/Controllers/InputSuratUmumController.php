@@ -21,8 +21,8 @@ class InputSuratUmumController extends Controller
     
     public function index(Request $request)
     {
-        $jenis_surat = JenisSurat::orderBy('created_at', 'desc')->get();
-        $tahun_surat = TahunSurat::orderBy('created_at', 'desc')->get();
+        $jenis_surat = JenisSurat::all();
+        $tahun_surat = TahunSurat::all();
 
         $id_jenis_surat = $request->get('id_jenis_surat');
         $id_tahun_surat = $request->get('id_tahun_surat');
@@ -39,7 +39,9 @@ class InputSuratUmumController extends Controller
         }
 
         $surat_umum = $query->get();
-
+        // Urutkan berdasarkan kolom tgl secara ascending
+        $surat_hukum = $query->orderBy('tgl', 'asc')->get(); 
+        
         return view('umum', [
             'surat_umum' => $surat_umum,
             'jenis_surat' => $jenis_surat,

@@ -14,9 +14,9 @@
 </head>
 
 <body>
-    <div class="wrapper">
+    <div class="wrapper @if ($errors->any()) expanded @endif">
 
-        <form action="{{ route('login') }}" method="POST">
+        <form action=" {{ route('login') }}" method="POST">
             @csrf
             <div class="img">
                 <img src="{{ asset('img/Logo-BPK.png') }}" alt="" class="logo" />
@@ -31,27 +31,25 @@
                 <input type="password" name="password" placeholder="Password" required />
                 <i class="bx bxs-lock-alt"></i>
             </div>
-
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
             <div class="remember">
                 <input type="checkbox" name="remember" />
                 <span>Remember me</span>
             </div>
 
-            <!-- Menggunakan tombol submit untuk login -->
             <button type="submit">
                 <b>Login</b>
             </button>
         </form>
     </div>
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
 
 </body>
 

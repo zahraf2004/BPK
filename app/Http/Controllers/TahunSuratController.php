@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\TahunSurat;
+use App\Models\InputSuratHukum;
+use App\Models\InputSuratHumas;
+use App\Models\InputSuratUmum;
+use App\Models\InputSuratKeu;
+use App\Models\InputSuratSDM;
 
 class TahunSuratController extends Controller
 {
@@ -50,9 +55,22 @@ class TahunSuratController extends Controller
  
      public function destroy($id)
      {
-         $tahun_surat = TahunSurat::findOrFail($id); 
-         $tahun_surat->delete(); 
- 
-         return redirect()->route('tahun_surat.index')->with('success', 'Jenis Surat berhasil dihapus');
+        $tahunSurat = TahunSurat::find($id);
+
+        // Cek apakah ada surat yang menggunakan tahun ini
+        $usedInSurat = InputSuratHukum::where('id_tahun_surat', $id)->exists() ||
+                        InputSuratHumas::where('id_tahun_surat', $id)->exists() ||
+                        InputSuratUmum::where('id_tahun_surat', $id)->exists() ||
+                        InputSuratKeu::where('id_tahun_surat', $id)->exists() ||
+                        InputSuratSDM::where('id_tahun_surat', $id)->exists();
+    
+        if ($usedInSurat) {
+            return redirect()->back()->with('error', 'Masih ada surat yang menggunakan tahun ini. Silakan hapus atau edit surat tersebut terlebih dahulu.');
+        }
+    
+        // Jika tidak ada surat yang terhubung, baru hapus TahunSurat
+        $tahunSurat->delete();
+    
+        return redirect()->back()->with('success', 'Tahun surat berhasil dihapus.');
      }
 }
