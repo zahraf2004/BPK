@@ -11,7 +11,7 @@
                     </button>
                     <img src="{{ asset('img/Logo-BPK.png') }}" alt="logo" height="45px">
                     <a class="navbar-brand" href="{{ url('/dashboard') }}"
-                        style="color: #ffffff; margin-left: 30px; font-size:25px;">SiMail</a>
+                        style="color: #ffffff; margin-left: 10px; font-size:20px;">SIMETRIS</a>
                 </div>
                 <div id="navbar-collapse" class="collapse navbar-collapse">
                     <form class="navbar-form navbar-left" role="search" style="margin-left: 20px">
@@ -42,8 +42,6 @@
                                     src="{{ asset('img/foto.jpeg') }}" class="img-responsive img-thumbnail img-circle">
                                 Username</a>
                             <ul class="dropdown-menu dropdown-block" role="menu">
-                                <li><a href="#">Profil edition</a></li>
-                                <li><a href="#">Admin</a></li>
                                 <li>
                                     <!-- Form Logout -->
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST"

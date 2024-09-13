@@ -77,12 +77,8 @@ class InputSuratHukumController extends Controller
 
     public function edit($id)
     {
-        if (auth()->user()->hak_akses !== 'admin') {
-            return redirect()->back()->with('error', 'Anda tidak memiliki akses untuk mengedit surat ini.');
-        }
-        $surat_hukum = InputSuratHukum::find($id); // Ambil data berdasarkan id
-
-        // Kirim data ke view form edit 
+        $surat_hukum = InputSuratHukum::find($id); 
+        
         return view('tbhsuratHukumEdit', [
             'surat_hukum' => $surat_hukum,
             'jenis_surat'=> JenisSurat::all(),
